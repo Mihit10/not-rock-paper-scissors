@@ -5,11 +5,14 @@ from dotenv import load_dotenv
 import time
 
 # Load environment variables
-load_dotenv()
-GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+if "GOOGLE_API_KEY" in os.environ:
+    load_dotenv()
+    api_key = os.environ.get("GOOGLE_API_KEY")
+else:
+    api_key = st.secrets["GOOGLE_API_KEY"]
 
 # Configure the Generative AI model
-genai.configure(api_key=GOOGLE_API_KEY)
+genai.configure(api_key=api_key)
 model = genai.GenerativeModel('gemini-1.5-flash')
 temperature = 0.2
 generation_config = genai.GenerationConfig(temperature=temperature)
